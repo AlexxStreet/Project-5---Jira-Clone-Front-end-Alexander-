@@ -23,7 +23,7 @@ describe('Issue create', () => {
   //number of issues we expect to see in the backlog after the test
   const EXPECTED_AMOUNT_OF_ISSUES = '5';
 
-  it('Should create issue successfully', () => {
+  it.only('Should create issue successfully', () => {
     IssueModal.createIssue(issueDetails);
     IssueModal.ensureIssueIsCreated(EXPECTED_AMOUNT_OF_ISSUES, issueDetails);
   });

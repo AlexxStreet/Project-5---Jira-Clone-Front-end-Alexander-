@@ -126,19 +126,19 @@ it('Should create an issue and validate it successfully', () => {
     
    
           
-    //Type value to description input field
+    //Type value to description input field (1 word)
     cy.get('.ql-editor').type(randomDescription);
 
-    //Type value to title input field
+    //Type value to title input field (several words)
     //Order of filling in the fields is first description, then title on purpose
     //Otherwise filling title first sometimes doesn't work due to web page implementation
     cy.get('input[name="title"]').type(randomtitle);
     
-    //Select Pickle Rick from reporter dropdown
+    //Select Baby Yoda from reporter dropdown
     cy.get('[data-testid="select:reporterId"]').click();
     cy.get('[data-testid="select-option:Baby Yoda"]').click();
 
-    //Select Highest from priority dropdown
+    //Select Low from priority dropdown
     cy.get('[data-testid="select:priority"]').click();
     cy.get('[data-testid="select-option:Low"]').click();
 

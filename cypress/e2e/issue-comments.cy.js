@@ -9,7 +9,7 @@ describe('Issue comments creating, editing and deleting', () => {
 
     const getIssueDetailsModal = () => cy.get('[data-testid="modal:issue-details"]');
 
-    it.only('Should create a comment successfully', () => {
+    it('Should create a comment successfully', () => {
         const comment = 'TEST_COMMENT';
 
         getIssueDetailsModal().within(() => {
@@ -26,6 +26,43 @@ describe('Issue comments creating, editing and deleting', () => {
             cy.get('[data-testid="issue-comment"]').should('contain', comment);
         });
     });
+
+    it('Should create, edit and delete a comment', () => {
+        const comment = 'TEST_COMMENT';
+        const commentEdited = 'New test_comment';
+        
+        //Add a new comment
+        getIssueDetailsModal().within(() => {
+            cy.contains('Add a comment...').click();
+            cy.get('textarea[placeholder="Add a comment..."]').type(comment);
+            cy.contains('button', 'Save').click().should('not.exist');
+            cy.contains('Add a comment...').should('exist');
+            cy.get('[data-testid="issue-comment"]').should('contain', comment);
+
+        //Edit comment
+        cy.get('[data-testid="issue-comment"]').first().contains('Edit')
+        .click().should('not.exist')
+        cy.get('textarea[placeholder="Add a comment..."]').type(commentEdited);
+        cy.contains('button', 'Save').click().should('not.exist');
+        cy.get('[data-testid="issue-comment"]').should('contain', 'Edit').and('contain', commentEdited);
+
+        // Delete comment
+        cy.contains('Delete').click();
+        cy.get('textarea[placeholder="Delete comment"]').click();
+        cy.get('[data-testid="modal:confirm"]').should('not.exist');
+        getIssueDetailsModal().contains(commentEdited).should('not.exist');
+
+    });
+
+
+
+
+
+
+
+
+
+
 
     it('Should create,edit and delete comment successfully', () => {
         const comment = 'TEST_COMMENT';
@@ -52,9 +89,14 @@ describe('Issue comments creating, editing and deleting', () => {
             cy.contains('Delete').click();
         });
 
-            cy.get('[data-testid="modal:confirm"]').contains('button', 'Delete comment')
-                .click().should('not.exist');
-            getIssueDetailsModal().contains(comment_edited).should('not.exist');
+        cy.get('[data-testid="modal:confirm"]')
+        .contains('button', 'Delete comment')
+        .click()
+        .should('not.exist');
+
+    getIssueDetailsModal()
+        .find('[data-testid="issue-comment"]')
+        .should('not.exist');
 
     });
 
@@ -99,4 +141,5 @@ describe('Issue comments creating, editing and deleting', () => {
             .find('[data-testid="issue-comment"]')
             .should('not.exist');
     });
+});
 });

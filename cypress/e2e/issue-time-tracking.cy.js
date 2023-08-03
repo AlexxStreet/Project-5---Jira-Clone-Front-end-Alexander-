@@ -57,7 +57,7 @@ it('Should create an issue and add estimation, change and delete', () => {
     cy.get(iconClose).click();
 });
 
-it('Should create an issue and add estimation, change and delete', () => {
+it('Should logs spent time and remove it', () => {
 
   const StopWatch = '[data-testid="icon:stopwatch"]'
   const Tracking = '[data-testid="modal:tracking"]'
@@ -76,7 +76,6 @@ it('Should create an issue and add estimation, change and delete', () => {
     cy.get(Tracking).contains('Done').click()
 
   //Removes logged spent time from recently created issue
-  
   cy.get(StopWatch).click();
   cy.get(Tracking).first().should('be.visible');
     cy.get(MyNumber).eq(1).clear();

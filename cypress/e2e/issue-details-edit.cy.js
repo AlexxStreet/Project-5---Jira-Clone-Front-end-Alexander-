@@ -62,4 +62,37 @@ describe('Issue details editing', () => {
   });
 
   const getIssueDetailsModal = () => cy.get('[data-testid="modal:issue-details"]');
+
+
+  it('Should have the correct number of options in the Priority dropdown', () => {
+    getIssueDetailsModal().within(() => {
+
+      const expectedLength = 5
+
+cy.get('[data-testid="icon:arrow-up"]').then((options) => {
+  // Use array functions to check the number of options
+  cy.wrap(options).should("have.length", expectedLength);
+});
+ });
+    });
+
+
+
+  it('Reporter name Should have only characters in it.', () => {
+    getIssueDetailsModal().within(() => {
+
+const regexPattern = /^[A-Za-z\s]*$/;
+    cy.get('[data-testid="select:reporter"]').invoke('text').then((reporterName) => {
+      
+    // Use regex to check if the reporter name contains only characters
+    expect(reporterName.trim()).to.match(regexPattern)
+
+
+    });
+
+
+
+    });
+    
+  });
 });

@@ -63,20 +63,45 @@ describe('Issue details editing', () => {
 
   const getIssueDetailsModal = () => cy.get('[data-testid="modal:issue-details"]');
 
+  //Bonus assignment 3 Task Nr.1
+  
+  const expectedLength = 5;
+  let priorityValues = [];
+  
+  describe('Priority Dropdown Test', () => {
 
-  it('Should have the correct number of options in the Priority dropdown', () => {
+    it.only('Should have the correct number of options in the Priority dropdown', () => {
     getIssueDetailsModal().within(() => {
 
-      const expectedLength = 5
-
-cy.get('[data-testid="icon:arrow-up"]').then((options) => {
-  // Use array functions to check the number of options
-  cy.wrap(options).should("have.length", expectedLength);
-});
- });
+      // Access the initially selected priority value and push it into the array
+    cy.get('[data-testid="select:priority"]').invoke('val').then((initialValue) => {
+      priorityValues.push(initialValue);
     });
 
+    // Open the dropdown by clicking on the priority field
+    cy.get('[data-testid="select:priority"]').click('bottomRight');
 
+    // Access the list of all priority options using appropriate selector
+    cy.get('[data-testid="select:priority"]').each(($option) => {
+      
+        // Remove leading and trailing whitespaces from the text
+        const priorityOption = $option.text().trim();
+        priorityValues.push(priorityOption);
+        cy.log(`Added value: ${priorityOption}, Current array length: ${priorityValues.length}`);
+      });
+    }).then(() => {
+      // Log the entire priorityValues array after collecting all the values
+      cy.log('Collected priority values:', priorityValues);
+    });
+
+    // Assert that the created array has the same length as the predefined number
+    cy.wrap(priorityValues).should('have.length', expectedLength);
+
+        });
+     });
+  });
+
+//Bonus Assignment 3 Task Nr. 2
 
   it('Reporter name Should have only characters in it.', () => {
     getIssueDetailsModal().within(() => {
@@ -87,12 +112,6 @@ const regexPattern = /^[A-Za-z\s]*$/;
     // Use regex to check if the reporter name contains only characters
     expect(reporterName.trim()).to.match(regexPattern)
 
-
-    });
-
-
-
-    });
-    
-  });
+         });
+      });
 });

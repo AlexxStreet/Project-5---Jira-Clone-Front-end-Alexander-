@@ -183,7 +183,9 @@ it('Should create an issue and validate it successfully', () => {
     });
   });
 
-  it.only('Should verifies that application is removing unnecessary spaces on the board view', () => {
+//Bonus Assignment Task Nr.3
+
+  it('Should verifies that application is removing unnecessary spaces on the board view', () => {
     const title = 'Hello     World';
     let titleTrimmed = title.trim();
 
